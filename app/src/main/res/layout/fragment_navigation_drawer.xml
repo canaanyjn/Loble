@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/theme_primary"
+              android:orientation="vertical"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:clickable="true"
+              >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/awesome"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/theme_text"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif-light"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="10dp"
+            android:background="@drawable/gradient_dark"
+            />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/drawer_bookings_main"
+        style="@style/Navigation_Drawer_Text"
+        android:text="@string/drawer_item_main"
+        android:drawableLeft="@drawable/ic_bookmark_list_24px"
+        />
+
+    <TextView
+        android:id="@+id/drawer_bookings_preference"
+        style="@style/Navigation_Drawer_Text"
+        android:text="@string/drawer_item_preference"
+        android:drawableLeft="@drawable/ic_bookmark_settings_24px"
+        />
+
+    <TextView
+        android:id="@+id/drawer_bookings_about"
+        style="@style/Navigation_Drawer_Text"
+        android:text="@string/drawer_item_about"
+        android:drawableLeft="@drawable/ic_bookmark_info_outline_24px"
+        />
+
+</LinearLayout>
