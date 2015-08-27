@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/theme_background_secondary"
+              android:orientation="vertical"
+    >
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/dialog_add_verse_address_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="10dp"
+        android:hint="@string/hint_add_verse_address"
+        android:textSize="16sp"
+        android:textColorHint="@color/theme_text_secondary"
+        app:met_baseColor="@color/theme_primary"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/lable_add_verse_address"
+        />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/dialog_add_verse_content_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="10dp"
+        android:hint="@string/hint_add_verse_content"
+        android:textSize="16sp"
+        android:textColorHint="@color/theme_text_secondary"
+        app:met_baseColor="@color/theme_primary"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/lable_add_verse_content"
+        />
+
+</LinearLayout>

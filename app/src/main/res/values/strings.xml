@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Loble</string>
+    <string name="app_version">1.1</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="close_lock_screen">Click To Back</string>
+
+    <string name="drawer_item_main">经文列表</string>
+    <string name="drawer_item_preference">设置</string>
+    <string name="drawer_item_about">关于我们</string>
+    <string name="network_connection_is_wrong">网络连接错误</string>
+
+    <string name="list_is_empty">暂时没有内容</string>
+    <string name="list_is_end">到底啦</string>
+
+    <string name="preference_title">个性化设置</string>
+    <string name="preference_open_lockscreen">开启锁屏</string>
+    <string name="preference_open_netpush">开启经文推送</string>
+    <string name="preference_open_toolbar">锁屏界面关闭系统状态栏</string>
+    <string name="preference_update_time">每日经文更新时间</string>
+    <string name="preference_other_setting_title">其他</string>
+    <string name="feedback">意见反馈</string>
+    <string name="update_check">检测更新</string>
+    <string name="rating">为我们评分</string>
+    <string name="confirm">确定</string>
+    <string name="contact_author">联系作者:</string>
+    <string name="author_email">canaanyjn@gmail.com</string>
+
+    <string name="hint_add_verse_address">请输入经节</string>
+    <string name="hint_add_verse_content">请输入经文</string>
+    <string name="lable_add_verse_address">章节</string>
+    <string name="lable_add_verse_content">经文</string>
+
+    <string name="add_verse">增加经文</string>
+
+
+</resources>

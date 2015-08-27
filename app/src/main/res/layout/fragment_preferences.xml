@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/theme_background"
+              android:padding="16dp"
+              android:orientation="vertical"
+    >
+
+    <TextView
+        android:text="@string/preference_title"
+        style="@style/Preference_Text_Title"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            style="@style/Preference_Text_Content"
+            android:text="@string/preference_open_lockscreen"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/fragment_prefer_lock_switch"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            />
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            style="@style/Preference_Text_Content"
+            android:text="@string/preference_open_toolbar"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/fragment_prefer_toolbar_show_switch"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            style="@style/Preference_Text_Content"
+            android:text="@string/preference_open_netpush"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/fragment_prefer_push_switch"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            />
+
+    </RelativeLayout>
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!-->-->
+
+        <!--<TextView-->
+            <!--style="@style/Preference_Text_Content"-->
+            <!--android:text="@string/preference_update_time"-->
+            <!--/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/fragment_prefer_update_time_set"-->
+            <!--style="@style/Preference_Text_Title"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="4dp"-->
+            <!--android:text="8:00"-->
+
+            <!--/>-->
+    <!--</RelativeLayout>-->
+
+    <TextView
+        android:text="@string/preference_other_setting_title"
+        style="@style/Preference_Text_Title"
+        android:layout_marginTop="16dp"
+        />
+
+    <TextView
+        android:id="@+id/fragment_prefer_feedback"
+        style="@style/Preference_Text_Layout"
+        android:text="@string/feedback"
+        />
+
+    <TextView
+        android:id="@+id/fragment_prefer_update"
+        style="@style/Preference_Text_Layout"
+        android:text="@string/update_check"
+        />
+
+    <TextView
+        android:id="@+id/fragment_prefer_rating"
+        style="@style/Preference_Text_Layout"
+        android:text="@string/rating"
+        />
+
+</LinearLayout>
