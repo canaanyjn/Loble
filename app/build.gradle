@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.canaan.lockbible"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 21
         versionCode 2
         versionName "1.1"
@@ -39,6 +39,8 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.0.3'
     //LitePal
     compile 'org.litepal.android:core:1.2.0'
+    //pin_view
+    compile 'com.github.dpizarro:pinview:VERSION'
     //volley
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
     //avoscloud-sdk 为 LeanCloud基础包
@@ -52,4 +54,5 @@ dependencies {
     compile 'cn.leancloud.android:avoscloud-feedback:v2.7+@aar'
     //umeng 自动更新
     compile files('libs/umeng-update-v2.6.0.1.jar')
+    compile files('libs/renderscript-v8.jar')
 }

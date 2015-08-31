@@ -1,19 +1,27 @@
 package com.canaan.lockbible.ui.Activity;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v8.renderscript.Allocation;
+import android.support.v8.renderscript.RenderScript;
+import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.HorizontalScrollView;
 
 import com.canaan.lockbible.Constants.Constants;
 import com.canaan.lockbible.R;
 import com.canaan.lockbible.Tools.Log;
 import com.canaan.lockbible.Tools.SharedPreferenUtils;
-import com.canaan.lockbible.Tools.TextUtils;
+import com.canaan.lockbible.ui.Fragment.LockPinFragment;
+import com.canaan.lockbible.ui.Fragment.LockVerseShowFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -23,13 +31,12 @@ import butterknife.InjectView;
  * Created by canaan on 2015/3/30 0030.
  */
 public class LockActivity extends BaseActivity {
-    @InjectView(R.id.at_lock_address_tv) TextView addressTextView;
-    @InjectView(R.id.at_lock_content_tv) TextView contentTextView;
-    @InjectView(R.id.at_lock_rootview) RelativeLayout rootLayout;
-
     private static final String TAG = LockActivity.class.getSimpleName();
-    public static Handler handler;
-    private float downY;
+
+    @InjectView(R.id.activit_lock_view_pager)ViewPager mViewPager;
+
+    private PagerAdapter mAdapter;
+    private Bitmap mBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +47,9 @@ public class LockActivity extends BaseActivity {
         ButterKnife.inject(this);
         Log.i(TAG, "On Create");
 
+        initViewPager();
+        mBitmap = getBitmapFromRes(R.drawable.pic_back);
         //startService(new Intent(this, LockScreenService.class));
-        setTypeFace();
-        setClicks();
-        setVerse();
     }
 
     private void setLock(){
@@ -57,51 +63,69 @@ public class LockActivity extends BaseActivity {
         }
     }
 
-    private void setTypeFace(){
-        TextUtils.setTypeFace(contentTextView, getAssets(), "fz_zxh.TTF");
-        TextUtils.setTypeFace(addressTextView,getAssets(),"fz_zxh.TTF");
+    private void initViewPager() {
+        mAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setCurrentItem(1);
     }
 
-    private void setClicks(){
-        rootLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        //downX = event.getX();
-                        downY = event.getY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        float moveY;
-                        moveY = event.getY();
-                        if (moveY - downY >200)
-                            exit(Constants.DOWN);
-                        if (downY - moveY > 200)
-                            exit(Constants.UP);
-                        break;
-                }
-                return true;
+    private Bitmap getBitmapFromRes(int id) {
+        Bitmap bmp = ((BitmapDrawable) getResources()
+                .getDrawable(id)).getBitmap();
+        return bmp;
+    }
+
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new LockPinFragment();
+            } else {
+                return new LockVerseShowFragment();
             }
-        });
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
 
-    private void exit(int direction){
-        finish();
-        if (direction == Constants.DOWN)
-            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_slide_out_bottom);
-        if (direction == Constants.UP)
-            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_slide_out_top);
+    public class BlurPageTransformer implements ViewPager.PageTransformer {
+        private Bitmap mBitmap;
+
+        public BlurPageTransformer(Bitmap bitmap) {
+            mBitmap = bitmap;
+        }
+
+        @Override
+        public void transformPage(View page, float position) {
+            blur(page,position);
+        }
+
+        private void blur(View view,float position) {
+            RenderScript rs = RenderScript.create(LockActivity.this);
+            Allocation overlayAlloc = Allocation.createFromBitmap(rs, mBitmap);
+            ScriptIntrinsicBlur blur =
+                    ScriptIntrinsicBlur.create(rs, overlayAlloc.getElement());
+            blur.setInput(overlayAlloc);
+
+            Log.d(TAG, "position--->" + position);
+            if (position == 0)
+                position = 0.1f;
+            blur.setRadius(Math.abs(position*10%25));
+            blur.forEach(overlayAlloc);
+            overlayAlloc.copyTo(mBitmap);
+            view.setBackground(new BitmapDrawable(getResources(), mBitmap));
+            rs.destroy();
+        }
     }
 
-    private void setVerse(){
-        Log.i(TAG,"VerseAddress-->"+SharedPreferenUtils.getString(this, Constants.TAG_LAST_VERSE_ADDRESS));
-        String addressVerse = SharedPreferenUtils.getString(this, Constants.TAG_LAST_VERSE_ADDRESS);
-        String contentVerse = SharedPreferenUtils.getString(this, Constants.TAG_LAST_VERSE_CONTENT);
-        if (addressVerse == "")
-            addressVerse = "创1:1";
-        if (contentVerse == "")
-            contentVerse = "起初";
-        addressTextView.setText(addressVerse);
-        contentTextView.setText("  "+contentVerse);
-    }
+
+
 }
