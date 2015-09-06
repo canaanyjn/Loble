@@ -27,7 +27,6 @@
         </activity>
 
         <activity android:name=".ui.Activity.AddVerseActivity"
-                  android:excludeFromRecents="true"
             >
         </activity>
 
@@ -36,6 +35,8 @@
             >
 
         </activity>
+
+        <activity android:name=".ui.Activity.SetPinActivity"></activity>
         
         <service android:name="com.canaan.lockbible.Service.LockScreenService"/>
 

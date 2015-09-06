@@ -2,13 +2,14 @@ package com.canaan.lockbible.ui.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.canaan.lockbible.DB.DBManager;
 
 /**
  * Created by canaan on 2015/3/30 0030.
  */
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends AppCompatActivity {
     protected DBManager mDbmanager;
 
     @Override

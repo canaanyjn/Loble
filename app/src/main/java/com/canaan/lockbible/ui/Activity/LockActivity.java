@@ -30,12 +30,12 @@ import butterknife.InjectView;
 /**
  * Created by canaan on 2015/3/30 0030.
  */
-public class LockActivity extends BaseActivity {
+public class LockActivity extends BaseActivity implements LockPinFragment.ViewPagerScroll{
     private static final String TAG = LockActivity.class.getSimpleName();
 
     @InjectView(R.id.activit_lock_view_pager)ViewPager mViewPager;
 
-    private PagerAdapter mAdapter;
+    PagerAdapter mAdapter;
     private Bitmap mBitmap;
 
     @Override
@@ -67,12 +67,26 @@ public class LockActivity extends BaseActivity {
         mAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(1);
+
+    }
+
+    public void setViewPagerEnable(boolean isAble) {
+        mViewPager.setEnabled(isAble);
     }
 
     private Bitmap getBitmapFromRes(int id) {
         Bitmap bmp = ((BitmapDrawable) getResources()
                 .getDrawable(id)).getBitmap();
         return bmp;
+    }
+
+    @Override
+    public void setAbility(boolean ability) {
+//        if (mViewPager == null) {
+//            View v = View.inflate()
+//            mViewPager = (ViewPager) findViewById(R.id.activit_lock_view_pager);
+//        }
+//        mViewPager.setEnabled(ability);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

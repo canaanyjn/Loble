@@ -8,7 +8,14 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
@@ -16,6 +23,7 @@ import com.canaan.lockbible.Constants.Constants;
 import com.canaan.lockbible.R;
 import com.canaan.lockbible.Service.LockScreenService;
 import com.canaan.lockbible.Tools.SharedPreferenUtils;
+import com.canaan.lockbible.ui.Activity.SetPinActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,9 +37,14 @@ public class SettingsFragment extends BaseFragment
     @InjectView(R.id.fragment_prefer_lock_switch) SwitchCompat mLockSwitch;
     @InjectView(R.id.fragment_prefer_push_switch) SwitchCompat mPushSwitch;
     @InjectView(R.id.fragment_prefer_toolbar_show_switch) SwitchCompat mToolBarSwitch;
+    @InjectView(R.id.fragment_prefer_pin_show_switch) SwitchCompat mPinShowSwitch;
     @InjectView(R.id.fragment_prefer_rating) TextView mRatingLayout;
     @InjectView(R.id.fragment_prefer_update) TextView mUpdateLayout;
     @InjectView(R.id.fragment_prefer_feedback) TextView mFeedbackLayout;
+    @InjectView(R.id.fragment_prefer_pin_setting_layout)
+    RelativeLayout mPinSettingLayout;
+    @InjectView(R.id.fragment_prefer_pin_show_layout)
+    RelativeLayout mPinShowLayout;
 
     private MaterialDialog materialDialog;
     @Override
@@ -79,8 +92,8 @@ public class SettingsFragment extends BaseFragment
 
     private void setSwitchType(){
         mLockSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_LOCK_SCREEN_OPEN));
-        mPushSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(),Constants.TAG_IS_PUSH_OPEN));
-        mToolBarSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(),Constants.TAG_IS_TOOLBAR_SHOW));
+        mPushSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_PUSH_OPEN));
+        mToolBarSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_TOOLBAR_SHOW));
     }
 
     private void setClicks(){
@@ -95,7 +108,7 @@ public class SettingsFragment extends BaseFragment
             @Override
             public void onClick(View v) {
                 Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
-                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -106,6 +119,72 @@ public class SettingsFragment extends BaseFragment
                 materialDialog.show();
             }
         });
+        mPinSettingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SetPinActivity.class));
+            }
+        });
+    }
+
+    private void setPinViewVisibility(boolean isShow) {
+        if (isShow) {
+            startPinViewAnimation(isShow);
+        } else {
+            startPinViewAnimation(isShow);
+        }
+
+    }
+
+    private void startPinViewAnimation(boolean isShow) {
+        AlphaAnimation showAnimation = new AlphaAnimation(0.0f,1.0f);
+        showAnimation.setDuration(300);
+        AlphaAnimation closeAnimation = new AlphaAnimation(1.0f,0.0f);
+        closeAnimation.setDuration(300);
+
+        showAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mPinSettingLayout.setVisibility(View.VISIBLE);
+                mPinShowLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        closeAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mPinSettingLayout.setVisibility(View.GONE);
+                mPinShowLayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        if (isShow) {
+            mPinSettingLayout.startAnimation(showAnimation);
+            mPinShowLayout.startAnimation(showAnimation);
+        } else {
+            mPinSettingLayout.startAnimation(closeAnimation);
+            mPinShowLayout.startAnimation(closeAnimation);
+        }
     }
 
     @Override
@@ -117,9 +196,11 @@ public class SettingsFragment extends BaseFragment
                     getActivity().startService(i);
                     LockScreenService.setServiceAlarm(getActivity(),true);
                     SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_LOCK_SCREEN_OPEN,true);
+                    setPinViewVisibility(true);
                 }else{
                     LockScreenService.stopService(getActivity());
                     SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_LOCK_SCREEN_OPEN,false);
+                    setPinViewVisibility(false);
                 }
                 break;
             case R.id.fragment_prefer_push_switch:

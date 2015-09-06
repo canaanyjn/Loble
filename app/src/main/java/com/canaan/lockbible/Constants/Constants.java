@@ -24,6 +24,7 @@ public class Constants {
     public static final String TAG_UPDATED_DATE = "updatedDate";
     public static final String TAG_LAST_VERSE_ADDRESS = "lastVerseAddress";
     public static final String TAG_LAST_VERSE_CONTENT = "lastVerseContent";
+    public static final String TAG_PATTERN_STRING = "patternString";
 
     public static final String LEAN_CLOUD_APPID = "2p1xrj0l3txarr7pxtejyxpirn84a04qr063q57ftmshv2up";
     public static final String LEAN_CLOUD_APPKEY = "fv1xo8v6xgbn0yzlfaaohvaqcyqss9x7cy646jaymlko1zij";
