@@ -22,6 +22,7 @@ import com.canaan.lockbible.Tools.Log;
 import com.canaan.lockbible.Tools.SharedPreferenUtils;
 import com.canaan.lockbible.ui.Fragment.LockPinFragment;
 import com.canaan.lockbible.ui.Fragment.LockVerseShowFragment;
+import com.canaan.lockbible.ui.widgt.MyViewPager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -33,7 +34,7 @@ import butterknife.InjectView;
 public class LockActivity extends BaseActivity {
     private static final String TAG = LockActivity.class.getSimpleName();
 
-    @InjectView(R.id.activit_lock_view_pager)ViewPager mViewPager;
+    @InjectView(R.id.activit_lock_view_pager)MyViewPager mViewPager;
 
     PagerAdapter mAdapter;
     private Bitmap mBitmap;

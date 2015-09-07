@@ -13,6 +13,7 @@ import com.canaan.lockbible.R;
 import com.canaan.lockbible.Tools.Log;
 import com.canaan.lockbible.Tools.SharedPreferenUtils;
 import com.canaan.lockbible.ui.Activity.LockActivity;
+import com.canaan.lockbible.ui.widgt.MyPatternView;
 import com.eftimoff.patternview.PatternView;
 
 import butterknife.ButterKnife;
@@ -22,12 +23,9 @@ import butterknife.InjectView;
  * Created by canaan on 2015/8/30 0030.
  */
 public class LockPinFragment extends Fragment {
-    public interface ViewPagerScroll {
-        void setAbility(boolean ability);
-    }
 
-
-    @InjectView(R.id.pin_layout_patternView) PatternView mPatternView;
+    @InjectView(R.id.pin_layout_patternView)
+    PatternView mPatternView;
 
     private View rootView;
     public static final String TAG = LockPinFragment.class.getSimpleName();
@@ -50,7 +48,7 @@ public class LockPinFragment extends Fragment {
                         Constants.TAG_PATTERN_STRING))) {
                     getActivity().finish();
                 } else {
-                    Toast.makeText(getActivity(),R.string.pin_is_wrong,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.pin_is_wrong, Toast.LENGTH_SHORT).show();
                 }
                 mPatternView.clearPattern();
             }
