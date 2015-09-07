@@ -21,6 +21,7 @@ public class Constants {
     public static final String TAG_IS_LOCK_SCREEN_OPEN = "isLockScreenOpen";
     public static final String TAG_IS_TOOLBAR_SHOW =  "isToolbarShow";
     public static final String TAG_IS_PUSH_OPEN =  "isPushShow";
+    public static final String TAG_IS_PIN_VIEW_OPEN =  "isPinViewShow";
     public static final String TAG_UPDATED_DATE = "updatedDate";
     public static final String TAG_LAST_VERSE_ADDRESS = "lastVerseAddress";
     public static final String TAG_LAST_VERSE_CONTENT = "lastVerseContent";

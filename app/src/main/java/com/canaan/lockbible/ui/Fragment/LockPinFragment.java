@@ -31,7 +31,6 @@ public class LockPinFragment extends Fragment {
 
     private View rootView;
     public static final String TAG = LockPinFragment.class.getSimpleName();
-    private ViewPagerScroll mViewPagerScroll = new LockActivity();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,13 +53,6 @@ public class LockPinFragment extends Fragment {
                     Toast.makeText(getActivity(),R.string.pin_is_wrong,Toast.LENGTH_SHORT).show();
                 }
                 mPatternView.clearPattern();
-                mViewPagerScroll.setAbility(true);
-            }
-        });
-        mPatternView.setOnPatternStartListener(new PatternView.OnPatternStartListener() {
-            @Override
-            public void onPatternStart() {
-                mViewPagerScroll.setAbility(false);
             }
         });
     }

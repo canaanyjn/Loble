@@ -30,13 +30,14 @@ import butterknife.InjectView;
 /**
  * Created by canaan on 2015/3/30 0030.
  */
-public class LockActivity extends BaseActivity implements LockPinFragment.ViewPagerScroll{
+public class LockActivity extends BaseActivity {
     private static final String TAG = LockActivity.class.getSimpleName();
 
     @InjectView(R.id.activit_lock_view_pager)ViewPager mViewPager;
 
     PagerAdapter mAdapter;
     private Bitmap mBitmap;
+    private int mPageCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +48,17 @@ public class LockActivity extends BaseActivity implements LockPinFragment.ViewPa
         ButterKnife.inject(this);
         Log.i(TAG, "On Create");
 
-        initViewPager();
         mBitmap = getBitmapFromRes(R.drawable.pic_back);
+        mPageCount = getPageCount();
+        initViewPager();
+        mAdapter.notifyDataSetChanged();
         //startService(new Intent(this, LockScreenService.class));
+    }
+
+    private int getPageCount() {
+        if (SharedPreferenUtils.getBoolean(this,Constants.TAG_IS_PIN_VIEW_OPEN))
+            return 2;
+        return 1;
     }
 
     private void setLock(){
@@ -66,27 +75,17 @@ public class LockActivity extends BaseActivity implements LockPinFragment.ViewPa
     private void initViewPager() {
         mAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(1);
+        Log.d(TAG,"position--->"+mViewPager.getCurrentItem());
+        if (mPageCount == 2) {
+            mViewPager.setCurrentItem(1);
+        }
 
-    }
-
-    public void setViewPagerEnable(boolean isAble) {
-        mViewPager.setEnabled(isAble);
     }
 
     private Bitmap getBitmapFromRes(int id) {
         Bitmap bmp = ((BitmapDrawable) getResources()
                 .getDrawable(id)).getBitmap();
         return bmp;
-    }
-
-    @Override
-    public void setAbility(boolean ability) {
-//        if (mViewPager == null) {
-//            View v = View.inflate()
-//            mViewPager = (ViewPager) findViewById(R.id.activit_lock_view_pager);
-//        }
-//        mViewPager.setEnabled(ability);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -97,16 +96,23 @@ public class LockActivity extends BaseActivity implements LockPinFragment.ViewPa
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return new LockPinFragment();
+            if (mPageCount == 2) {
+                if (position == 0) {
+                    return new LockPinFragment();
+                } else {
+                    return new LockVerseShowFragment();
+                }
+            } else if (mPageCount == 1){
+                return new LockVerseShowFragment();
             } else {
                 return new LockVerseShowFragment();
             }
+
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return mPageCount;
         }
     }
 

@@ -88,12 +88,14 @@ public class SettingsFragment extends BaseFragment
         mLockSwitch.setOnCheckedChangeListener(this);
         mPushSwitch.setOnCheckedChangeListener(this);
         mToolBarSwitch.setOnCheckedChangeListener(this);
+        mPinShowSwitch.setOnCheckedChangeListener(this);
     }
 
     private void setSwitchType(){
         mLockSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_LOCK_SCREEN_OPEN));
         mPushSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_PUSH_OPEN));
         mToolBarSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_TOOLBAR_SHOW));
+        mPinShowSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_PIN_VIEW_OPEN));
     }
 
     private void setClicks(){
@@ -215,6 +217,13 @@ public class SettingsFragment extends BaseFragment
                     SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_TOOLBAR_SHOW,true);
                 }else{
                     SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_TOOLBAR_SHOW,false);
+                }
+                break;
+            case R.id.fragment_prefer_pin_show_switch:
+                if(!SharedPreferenUtils.getBoolean(getActivity(),Constants.TAG_IS_PIN_VIEW_OPEN)){
+                    SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_PIN_VIEW_OPEN,true);
+                }else{
+                    SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_PIN_VIEW_OPEN,false);
                 }
                 break;
         }

@@ -107,11 +107,11 @@ public class LockScreenService extends Service {
                                 verseContent = verses.get(0).getString("verseContent");
 
                                 SharedPreferenUtils.saveString(LockScreenService.this,
-                                        Constants.TAG_LAST_VERSE_ADDRESS,verseAddress);
+                                        Constants.TAG_LAST_VERSE_ADDRESS, verseAddress);
                                 SharedPreferenUtils.saveString(LockScreenService.this,
-                                        Constants.TAG_LAST_VERSE_CONTENT,verseContent);
+                                        Constants.TAG_LAST_VERSE_CONTENT, verseContent);
 
-                                if (!dbManager.queryVerseByDate(DateUtils.getDate())){
+                                if (!dbManager.queryVerseByDate(DateUtils.getDate())) {
                                     Verse verse = new Verse();
                                     verse.setDate(DateUtils.getDate());
                                     verse.setVerseAddress(verseAddress);
@@ -119,16 +119,21 @@ public class LockScreenService extends Service {
                                     dbManager.addVerse(verse);
                                 }
                             } else {
-                                Toast.makeText(LockScreenService.this,"请检查网络连接或重试",
-                                        Toast.LENGTH_SHORT).show();
+                                if (verses == null) {
+                                    Toast.makeText(LockScreenService.this, "无今日经文", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(LockScreenService.this, "请检查网络连接或重试",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
                                 Log.e(TAG, "exception-->" + e.toString());
 
                                 SharedPreferenUtils.saveString(LockScreenService.this,
                                         Constants.TAG_LAST_VERSE_ADDRESS,
-                                            dbManager.queryTodayVerseAddress());
+                                        dbManager.queryTodayVerseAddress());
                                 SharedPreferenUtils.saveString(LockScreenService.this,
                                         Constants.TAG_LAST_VERSE_CONTENT,
-                                            dbManager.queryTodayVerseContent());
+                                        dbManager.queryTodayVerseContent());
                             }
                         }
                     });
