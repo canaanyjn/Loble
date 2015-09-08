@@ -1,6 +1,7 @@
 package com.canaan.lockbible.ui.Fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.canaan.lockbible.Constants.Constants;
 import com.canaan.lockbible.R;
 import com.canaan.lockbible.Service.LockScreenService;
@@ -82,6 +84,8 @@ public class SettingsFragment extends BaseFragment
                         materialDialog.dismiss();
                     }
                 });
+
+        addRippleView();
     }
 
     private void setSwitchListener(){
@@ -135,7 +139,19 @@ public class SettingsFragment extends BaseFragment
         } else {
             startPinViewAnimation(isShow);
         }
+    }
 
+    private void setRippleView(View view) {
+        MaterialRippleLayout.on(view)
+                .rippleColor(Color.GRAY)
+                .rippleAlpha(0.2f)
+                .create();
+    }
+
+    private void addRippleView() {
+        setRippleView(mFeedbackLayout);
+        setRippleView(mRatingLayout);
+        setRippleView(mUpdateLayout);
     }
 
     private void startPinViewAnimation(boolean isShow) {

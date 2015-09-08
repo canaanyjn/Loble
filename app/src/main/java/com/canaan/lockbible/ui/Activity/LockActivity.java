@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -60,6 +61,14 @@ public class LockActivity extends BaseActivity {
         if (SharedPreferenUtils.getBoolean(this,Constants.TAG_IS_PIN_VIEW_OPEN))
             return 2;
         return 1;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void setLock(){

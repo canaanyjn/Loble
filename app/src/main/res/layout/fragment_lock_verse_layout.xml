@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
 
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/at_lock_scroll"
@@ -26,13 +27,26 @@
         android:id="@+id/at_lock_address_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@id/at_lock_address_tv"
-        android:layout_alignEnd="@id/at_lock_address_tv"
-        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="48dp"
+        android:gravity="right"
         android:layout_marginTop="32dp"
         android:layout_below="@+id/at_lock_scroll"
-        android:text="你好"
         style="@style/Lock_TextView"
     />
+
+    <TextView
+        android:id="@+id/at_lock_slide_unlock_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/slide_to_unlock"
+        android:textColor="@color/theme_text_third"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:textSize="18sp"
+        />
+
+
 
 </RelativeLayout>

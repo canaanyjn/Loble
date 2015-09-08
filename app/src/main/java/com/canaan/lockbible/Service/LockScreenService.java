@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
+import android.view.ViewParent;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
@@ -88,6 +90,17 @@ public class LockScreenService extends Service {
 
     };
 
+    private boolean isUpdated() {
+        String updateDate = SharedPreferenUtils.getString(LockScreenService.this, Constants.TAG_UPDATED_DATE);
+        if (updateDate.equals(DateUtils.getDate()))
+            return true;
+        return false;
+    }
+
+    private boolean isPushVerseOpen() {
+        return SharedPreferenUtils.getBoolean(LockScreenService.this,Constants.TAG_IS_PUSH_OPEN);
+    }
+
     public class GetVerseThread implements Runnable{
 
         @Override
@@ -102,6 +115,7 @@ public class LockScreenService extends Service {
                             String verseAddress = "";
                             String verseContent = "";
                             DBManager dbManager = new DBManager(getApplicationContext());
+                            Toast.makeText(LockScreenService.this, "getData is running", Toast.LENGTH_SHORT).show();
                             if (e == null) {
                                 verseAddress = verses.get(0).getString("verseAddress");
                                 verseContent = verses.get(0).getString("verseContent");
@@ -110,14 +124,16 @@ public class LockScreenService extends Service {
                                         Constants.TAG_LAST_VERSE_ADDRESS, verseAddress);
                                 SharedPreferenUtils.saveString(LockScreenService.this,
                                         Constants.TAG_LAST_VERSE_CONTENT, verseContent);
+                                SharedPreferenUtils.saveString(LockScreenService.this,
+                                        Constants.TAG_UPDATED_DATE,DateUtils.getDate());
 
-                                if (!dbManager.queryVerseByDate(DateUtils.getDate())) {
-                                    Verse verse = new Verse();
-                                    verse.setDate(DateUtils.getDate());
-                                    verse.setVerseAddress(verseAddress);
-                                    verse.setVerseContent(verseContent);
-                                    dbManager.addVerse(verse);
-                                }
+//                                if (!dbManager.queryVerseByDate(DateUtils.getDate())) {
+//                                    Verse verse = new Verse();
+//                                    verse.setDate(DateUtils.getDate());
+//                                    verse.setVerseAddress(verseAddress);
+//                                    verse.setVerseContent(verseContent);
+//                                    dbManager.addVerse(verse);
+//                                }
                             } else {
                                 if (verses == null) {
                                     Toast.makeText(LockScreenService.this, "无今日经文", Toast.LENGTH_SHORT).show();
@@ -144,9 +160,11 @@ public class LockScreenService extends Service {
 
 
     public void onStart(Intent intent,int startId){
-        Log.i(TAG,"On Start");
+        Log.i(TAG, "On Start");
         super.onStart(intent, startId);
-        new Thread(new GetVerseThread()).start();
+        if (!isUpdated() && isPushVerseOpen()) {
+            new Thread(new GetVerseThread()).start();
+        }
         notifySpinnerBar();
     }
 

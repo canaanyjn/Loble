@@ -13,8 +13,6 @@
         android:src="@drawable/pic_back"
         />
 
-
-
     <com.canaan.lockbible.ui.widgt.MyViewPager
         android:id="@+id/activit_lock_view_pager"
         android:layout_width="match_parent"
