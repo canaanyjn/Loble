@@ -14,26 +14,35 @@
         android:layout_centerInParent="true"
         >
 
-        <TextView
-            android:id="@+id/at_lock_content_tv"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Lock_TextView"
-            />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/at_lock_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                style="@style/Lock_TextView"
+                />
+
+            <TextView
+                android:id="@+id/at_lock_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="48dp"
+                android:gravity="right"
+                android:layout_marginTop="16dp"
+                android:layout_below="@+id/at_lock_content_tv"
+                style="@style/Lock_TextView"
+                />
+
+        </RelativeLayout>
 
     </ScrollView>
 
-    <TextView
-        android:id="@+id/at_lock_address_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="48dp"
-        android:gravity="right"
-        android:layout_marginTop="32dp"
-        android:layout_below="@+id/at_lock_scroll"
-        style="@style/Lock_TextView"
-    />
+
 
     <TextView
         android:id="@+id/at_lock_slide_unlock_tv"

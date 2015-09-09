@@ -58,6 +58,11 @@ public class LockActivity extends BaseActivity {
     }
 
     private int getPageCount() {
+        boolean a = SharedPreferenUtils.getBoolean(this, Constants.TAG_IS_PIN_VIEW_OPEN);
+        if (SharedPreferenUtils.getString(this,Constants.TAG_PATTERN_STRING).equals("")) {
+            SharedPreferenUtils.saveBoolean(this, Constants.TAG_IS_PIN_VIEW_OPEN, false);
+        }
+
         if (SharedPreferenUtils.getBoolean(this,Constants.TAG_IS_PIN_VIEW_OPEN))
             return 2;
         return 1;
@@ -85,7 +90,7 @@ public class LockActivity extends BaseActivity {
     private void initViewPager() {
         mAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
-        Log.d(TAG,"position--->"+mViewPager.getCurrentItem());
+        Log.d(TAG, "position--->" + mViewPager.getCurrentItem());
         if (mPageCount == 2) {
             mViewPager.setCurrentItem(1);
         }

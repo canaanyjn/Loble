@@ -63,6 +63,7 @@ public class SetPinActivity extends SecondActivity {
     private void savePatternString() {
         SharedPreferenUtils.saveString(SetPinActivity.this, Constants.TAG_PATTERN_STRING,
                 patternString);
+        Toast.makeText(this,patternString,Toast.LENGTH_SHORT).show();
     }
 
 

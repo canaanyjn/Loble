@@ -115,7 +115,6 @@ public class LockScreenService extends Service {
                             String verseAddress = "";
                             String verseContent = "";
                             DBManager dbManager = new DBManager(getApplicationContext());
-                            Toast.makeText(LockScreenService.this, "getData is running", Toast.LENGTH_SHORT).show();
                             if (e == null) {
                                 verseAddress = verses.get(0).getString("verseAddress");
                                 verseContent = verses.get(0).getString("verseContent");

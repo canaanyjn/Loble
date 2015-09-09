@@ -18,6 +18,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.balysv.materialripple.MaterialRippleLayout;
@@ -59,10 +60,10 @@ public class SettingsFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_preferences,container,false);
 
-        ButterKnife.inject(this,v);
+        ButterKnife.inject(this, v);
         init();
-        setSwitchListener();
         setSwitchType();
+        setSwitchListener();
         setClicks();
         return v;
     }
@@ -100,6 +101,9 @@ public class SettingsFragment extends BaseFragment
         mPushSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_PUSH_OPEN));
         mToolBarSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_TOOLBAR_SHOW));
         mPinShowSwitch.setChecked(SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_PIN_VIEW_OPEN));
+        if (SharedPreferenUtils.getString(getActivity(),Constants.TAG_PATTERN_STRING).equals("")) {
+            mPinShowSwitch.setChecked(false);
+        }
     }
 
     private void setClicks(){
@@ -213,10 +217,13 @@ public class SettingsFragment extends BaseFragment
                     Intent i = new Intent(getActivity(), LockScreenService.class);
                     getActivity().startService(i);
                     LockScreenService.setServiceAlarm(getActivity(),true);
-                    SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_LOCK_SCREEN_OPEN,true);
+
+                    SharedPreferenUtils.saveBoolean(getActivity(), Constants.TAG_IS_LOCK_SCREEN_OPEN,true);
                     setPinViewVisibility(true);
+
                 }else{
                     LockScreenService.stopService(getActivity());
+
                     SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_LOCK_SCREEN_OPEN,false);
                     setPinViewVisibility(false);
                 }
@@ -236,8 +243,15 @@ public class SettingsFragment extends BaseFragment
                 }
                 break;
             case R.id.fragment_prefer_pin_show_switch:
+                 boolean a = SharedPreferenUtils.getBoolean(getActivity(), Constants.TAG_IS_PIN_VIEW_OPEN);
                 if(!SharedPreferenUtils.getBoolean(getActivity(),Constants.TAG_IS_PIN_VIEW_OPEN)){
-                    SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_PIN_VIEW_OPEN,true);
+                    if (SharedPreferenUtils.getString(getActivity(),Constants.TAG_PATTERN_STRING).equals("")){
+                        Toast.makeText(getActivity(),R.string.set_pin_first,Toast.LENGTH_SHORT).show();
+                        mPinShowSwitch.toggle();
+                        SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_PIN_VIEW_OPEN,false);
+                    } else {
+                        SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_PIN_VIEW_OPEN,true);
+                    }
                 }else{
                     SharedPreferenUtils.saveBoolean(getActivity(),Constants.TAG_IS_PIN_VIEW_OPEN,false);
                 }

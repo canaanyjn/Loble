@@ -21,6 +21,7 @@
     <string name="preference_open_toolbar">锁屏界面关闭系统状态栏</string>
     <string name="preference_open_pin">开启锁屏密码</string>
     <string name="preference_pin_setting">      设置锁屏密码</string>
+    <string name="set_pin_first">请先设置锁屏密码</string>
     <string name="slide_to_unlock">滑动解锁</string>
     <string name="set_pin">请设置密码</string>
     <string name="confirm_pin">请确认密码</string>
