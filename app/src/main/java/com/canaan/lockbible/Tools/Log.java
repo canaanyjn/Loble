@@ -1,7 +1,7 @@
 package com.canaan.lockbible.Tools;
 
 public class Log {
-	public static boolean isDebug = true;
+	public static boolean isDebug = false;
 	
 	public static void i(String tag,String string){
 		if(isDebug){

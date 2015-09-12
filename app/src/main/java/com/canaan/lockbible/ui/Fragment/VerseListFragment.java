@@ -134,7 +134,9 @@ public class VerseListFragment extends BaseFragment {
                         current_page ++;
                         isLoading = false;
                     } else {
-                        Log.d(TAG,getResources().getString(R.string.close_lock_screen));
+                        if (isAdded()) {
+                            Log.d(TAG,getResources().getString(R.string.close_lock_screen));
+                        }
                         isLoading = false;
                     }
                 }

@@ -22,6 +22,7 @@ public class VerseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context mContext;
     private List<Verse> mVerses;
     private LoadingFooter mLoadingFooter;
+    private View loadingLayout;
 
     private static final String TAG = VerseListAdapter.class.getSimpleName();
     private static final int TYPE_NORMAL = 0;
@@ -61,9 +62,9 @@ public class VerseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             viewHolder = new Holder(v);
             return viewHolder;
         } else {
-            View v = LayoutInflater.from(mContext).
+            loadingLayout = LayoutInflater.from(mContext).
                     inflate(R.layout.item_loading_footer,viewGroup,false);
-            mLoadingFooter = new LoadingFooter(v);
+            mLoadingFooter = new LoadingFooter(loadingLayout);
             return mLoadingFooter;
         }
     }
@@ -125,6 +126,9 @@ public class VerseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public int getFooterState() {
+        if (mLoadingFooter == null) {
+            return mLoadingFooter.STATE_LOADING;
+        }
         return mLoadingFooter.getLoadingFooterState();
     }
 

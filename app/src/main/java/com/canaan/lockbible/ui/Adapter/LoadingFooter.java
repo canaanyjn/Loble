@@ -1,6 +1,8 @@
 package com.canaan.lockbible.ui.Adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ public class LoadingFooter extends RecyclerView.ViewHolder {
         super(itemView);
         mLoadingTextView = (TextView)itemView.findViewById(R.id.loading_text);
         mProgressBar = (ProgressBar)itemView.findViewById(R.id.loading_progressBar);
+        //state = STATE_LOADING;
     }
 
     public void setLoadingFooterState(int state){
