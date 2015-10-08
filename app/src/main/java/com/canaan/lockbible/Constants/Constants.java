@@ -15,6 +15,9 @@ public class Constants {
 
     public static final int INTERVAL = 1000 * 60 * 60 * 24;// 24h
     public static final int INTERVAL_TEST = 1000*10;// 10s
+    public static final int TRIGGER_HOUR = 0;
+    public static final int TRIGGER_MINUTE = 2;
+    public static final int TRIGGER_SECOND = 0;
 
     public static final int DEFAULT_PAGE_NUM = 10;
 
@@ -30,6 +33,5 @@ public class Constants {
     public static final String LEAN_CLOUD_APPID = "2p1xrj0l3txarr7pxtejyxpirn84a04qr063q57ftmshv2up";
     public static final String LEAN_CLOUD_APPKEY = "fv1xo8v6xgbn0yzlfaaohvaqcyqss9x7cy646jaymlko1zij";
     public static final String LEAN_CLOUD_MASTERKEY = "crct948yfdzsvgwqlhip3thn8xy7dv7d6q8o4s6a3ldsmtfj";
-
-
+    
 }
