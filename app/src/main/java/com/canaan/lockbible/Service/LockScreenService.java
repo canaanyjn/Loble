@@ -3,7 +3,6 @@ package com.canaan.lockbible.Service;
 
 import android.app.AlarmManager;
 import android.app.KeyguardManager;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -12,23 +11,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
-import android.view.ViewParent;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
-import com.canaan.lockbible.ui.Activity.LockActivity;
 import com.canaan.lockbible.Constants.Constants;
 import com.canaan.lockbible.DB.DBManager;
-import com.canaan.lockbible.Model.Verse;
-import com.canaan.lockbible.R;
 import com.canaan.lockbible.Tools.DateUtils;
 import com.canaan.lockbible.Tools.Log;
 import com.canaan.lockbible.Tools.SharedPreferenUtils;
-
+import com.canaan.lockbible.ui.Activity.LockActivity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -81,8 +75,7 @@ public class LockScreenService extends Service {
 
             Log.i(TAG, "BRonReceive");
             if (intent.getAction().equals("android.intent.action.SCREEN_ON")
-                    || intent.getAction().equals("android.intent.action.SCREEN_OFF"))
-            {
+                    || intent.getAction().equals("android.intent.action.SCREEN_OFF")) {
                 if (SharedPreferenUtils.getBoolean(LockScreenService.this,Constants.TAG_IS_LOCK_SCREEN_OPEN))
                     LockScreenService.this.startActivity(toLockIntent);
             }
@@ -162,7 +155,7 @@ public class LockScreenService extends Service {
         if (!isUpdated() && isPushVerseOpen()) {
             new Thread(new GetVerseThread()).start();
         }
-        notifySpinnerBar();
+        //notifySpinnerBar();
     }
 
     public void onDestroy(){
@@ -175,16 +168,16 @@ public class LockScreenService extends Service {
         return null;
     }
 
-    private void notifySpinnerBar() {
-        Notification notify = new Notification(R.drawable.ic_launcher,null,0);
-        notify.flags = Notification.FLAG_ONGOING_EVENT;
-
-        Intent notifyIntent = new Intent(this,LockActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, 0);
-        notify.setLatestEventInfo(this, null, null, pendingIntent);
-
-        this.startForeground(0, notify);
-    }
+//    private void notifySpinnerBar() {
+//        Notification notify = new Notification(R.drawable.ic_launcher,null,0);
+//        notify.flags = Notification.FLAG_ONGOING_EVENT;
+//
+//        Intent notifyIntent = new Intent(this,LockActivity.class);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, 0);
+//        notify.setLatestEventInfo(this, null, null, pendingIntent);
+//
+//        this.startForeground(0, notify);
+//    }
 
     //注册broadcast
     public void registerComponent()
