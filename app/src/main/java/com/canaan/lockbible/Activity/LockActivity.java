@@ -38,6 +38,7 @@ public class LockActivity extends BaseActivity {
 
         setContentView(R.layout.activity_lock);
         ButterKnife.inject(this);
+
         Log.i(TAG, "On Create");
 
         //startService(new Intent(this, LockScreenService.class));
