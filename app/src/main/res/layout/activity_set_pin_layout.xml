@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:patternview="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/theme_background_secondary"
+    >
+
+    <TextView
+        android:id="@+id/pin_layout_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:textColor="@color/theme_text_title"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/set_pin"
+        />
+
+    <com.eftimoff.patternview.PatternView
+        android:id="@+id/pin_layout_patternView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="64dp"
+        patternview:pathColor="@color/primary_dark_material_light"
+        patternview:circleColor="@color/highlighted_text_material_light"
+        patternview:gridSize="3"/>
+
+</RelativeLayout>

@@ -1,17 +1,13 @@
-package com.canaan.lockbible.Activity;
+package com.canaan.lockbible.ui.Activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.canaan.lockbible.Fragment.AddVerseFragment;
+import com.canaan.lockbible.ui.Fragment.AddVerseFragment;
 import com.canaan.lockbible.R;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by canaan on 2015/4/10 0010.

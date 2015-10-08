@@ -37,7 +37,7 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:name="com.canaan.lockbible.Fragment.NavigationDrawerFragment"
+        android:name="com.canaan.lockbible.ui.Fragment.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>

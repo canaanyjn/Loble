@@ -1,5 +1,6 @@
-package com.canaan.lockbible.Fragment;
+package com.canaan.lockbible.ui.Fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.canaan.lockbible.R;
 
 import java.util.ArrayList;
@@ -47,14 +49,23 @@ public class NavigationDrawerFragment extends BaseFragment
         ButterKnife.inject(this, drawerContent);
         //findViews(drawerContent);
         init();
+        addRippleView();
         return drawerContent;
     }
 
-    private void findViews(View v){
-        mainTextView = (TextView)v.findViewById(R.id.drawer_bookings_main);
-        preferenceTextView = (TextView)v.findViewById(R.id.drawer_bookings_preference);
-        aboutTextView = (TextView)v.findViewById(R.id.drawer_bookings_about);
+    private void addRippleView() {
+        setRippleView(mainTextView);
+        setRippleView(preferenceTextView);
+        setRippleView(aboutTextView);
     }
+
+    private void setRippleView(View view) {
+        MaterialRippleLayout.on(view)
+                .rippleColor(Color.GRAY)
+                .rippleAlpha(0.2f)
+                .create();
+    }
+
     public void setUp(int Id,DrawerLayout drawerLayout){
         mFragmentContainerView = getActivity().findViewById(Id);
         mDrawerLayout = drawerLayout;

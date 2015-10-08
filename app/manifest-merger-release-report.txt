@@ -38,7 +38,7 @@ MERGED from com.mcxiaoke.volley:library-aar:1.0.0:5:5
 		ADDED from AndroidManifest.xml:11:9
 	android:name
 		ADDED from AndroidManifest.xml:7:9
-activity#com.canaan.lockbible.Activity.MainActivity
+activity#com.canaan.lockbible.ui.Activity.MainActivity
 ADDED from AndroidManifest.xml:12:9
 	android:label
 		ADDED from AndroidManifest.xml:16:13
@@ -58,13 +58,21 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:20:17
 	android:name
 		ADDED from AndroidManifest.xml:20:27
+<<<<<<< HEAD
 activity#com.canaan.lockbible.Activity.LockActivity
+=======
+activity#com.canaan.lockbible.ui.Activity.LockActivity
+>>>>>>> origin/canaan
 ADDED from AndroidManifest.xml:24:9
 	android:excludeFromRecents
 		ADDED from AndroidManifest.xml:25:19
 	android:name
 		ADDED from AndroidManifest.xml:24:19
+<<<<<<< HEAD
 activity#com.canaan.lockbible.Activity.AddVerseActivity
+=======
+activity#com.canaan.lockbible.ui.Activity.AddVerseActivity
+>>>>>>> origin/canaan
 ADDED from AndroidManifest.xml:29:9
 	android:excludeFromRecents
 		ADDED from AndroidManifest.xml:30:19

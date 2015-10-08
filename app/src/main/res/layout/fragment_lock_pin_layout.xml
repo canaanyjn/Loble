@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <com.eftimoff.patternview.PatternView
+        xmlns:patternview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pin_layout_patternView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        patternview:pathColor="@color/primary_dark_material_light"
+        patternview:circleColor="@color/highlighted_text_material_light"
+        patternview:gridSize="3"/>
+
+</RelativeLayout>

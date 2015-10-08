@@ -1,4 +1,4 @@
-package com.canaan.lockbible.Fragment;
+package com.canaan.lockbible.ui.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

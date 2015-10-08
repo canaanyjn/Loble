@@ -16,13 +16,16 @@ public class Constants {
     public static final int INTERVAL = 1000 * 60 * 60 * 24;// 24h
     public static final int INTERVAL_TEST = 1000*10;// 10s
 
+    public static final int DEFAULT_PAGE_NUM = 10;
 
     public static final String TAG_IS_LOCK_SCREEN_OPEN = "isLockScreenOpen";
     public static final String TAG_IS_TOOLBAR_SHOW =  "isToolbarShow";
     public static final String TAG_IS_PUSH_OPEN =  "isPushShow";
+    public static final String TAG_IS_PIN_VIEW_OPEN =  "isPinViewShow";
     public static final String TAG_UPDATED_DATE = "updatedDate";
     public static final String TAG_LAST_VERSE_ADDRESS = "lastVerseAddress";
     public static final String TAG_LAST_VERSE_CONTENT = "lastVerseContent";
+    public static final String TAG_PATTERN_STRING = "patternString";
 
     public static final String LEAN_CLOUD_APPID = "2p1xrj0l3txarr7pxtejyxpirn84a04qr063q57ftmshv2up";
     public static final String LEAN_CLOUD_APPKEY = "fv1xo8v6xgbn0yzlfaaohvaqcyqss9x7cy646jaymlko1zij";

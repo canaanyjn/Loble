@@ -12,13 +12,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
+import android.view.ViewParent;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
-import com.canaan.lockbible.Activity.LockActivity;
+import com.canaan.lockbible.ui.Activity.LockActivity;
 import com.canaan.lockbible.Constants.Constants;
 import com.canaan.lockbible.DB.DBManager;
 import com.canaan.lockbible.Model.Verse;
@@ -88,6 +90,17 @@ public class LockScreenService extends Service {
 
     };
 
+    private boolean isUpdated() {
+        String updateDate = SharedPreferenUtils.getString(LockScreenService.this, Constants.TAG_UPDATED_DATE);
+        if (updateDate.equals(DateUtils.getDate()))
+            return true;
+        return false;
+    }
+
+    private boolean isPushVerseOpen() {
+        return SharedPreferenUtils.getBoolean(LockScreenService.this,Constants.TAG_IS_PUSH_OPEN);
+    }
+
     public class GetVerseThread implements Runnable{
 
         @Override
@@ -95,7 +108,6 @@ public class LockScreenService extends Service {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e(TAG,"findVerse1");
                     AVQuery<AVObject> query = new AVQuery<AVObject>("Verse");
                     query.whereEqualTo("date", DateUtils.getDate());
                     query.findInBackground(new FindCallback<AVObject>() {
@@ -108,28 +120,33 @@ public class LockScreenService extends Service {
                                 verseContent = verses.get(0).getString("verseContent");
 
                                 SharedPreferenUtils.saveString(LockScreenService.this,
-                                        Constants.TAG_LAST_VERSE_ADDRESS,verseAddress);
+                                        Constants.TAG_LAST_VERSE_ADDRESS, verseAddress);
                                 SharedPreferenUtils.saveString(LockScreenService.this,
-                                        Constants.TAG_LAST_VERSE_CONTENT,verseContent);
-
-                                if (!dbManager.queryVerseByDate(DateUtils.getDate())){
-                                    Verse verse = new Verse();
-                                    verse.setDate(DateUtils.getDate());
-                                    verse.setVerseAddress(verseAddress);
-                                    verse.setVerseContent(verseContent);
-                                    dbManager.addVerse(verse);
-                                }
+                                        Constants.TAG_LAST_VERSE_CONTENT, verseContent);
+                                SharedPreferenUtils.saveString(LockScreenService.this,
+                                        Constants.TAG_UPDATED_DATE,DateUtils.getDate());
+//                                if (!dbManager.queryVerseByDate(DateUtils.getDate())) {
+//                                    Verse verse = new Verse();
+//                                    verse.setDate(DateUtils.getDate());
+//                                    verse.setVerseAddress(verseAddress);
+//                                    verse.setVerseContent(verseContent);
+//                                    dbManager.addVerse(verse);
+//                                }
                             } else {
-                                Toast.makeText(LockScreenService.this,"请检查网络连接或重试",
-                                        Toast.LENGTH_SHORT).show();
+                                if (verses == null) {
+                                    Toast.makeText(LockScreenService.this, "无今日经文", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(LockScreenService.this, "请检查网络连接或重试",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 Log.e(TAG, "exception-->" + e.toString());
 
                                 SharedPreferenUtils.saveString(LockScreenService.this,
                                         Constants.TAG_LAST_VERSE_ADDRESS,
-                                            dbManager.queryTodayVerseAddress());
+                                        dbManager.queryTodayVerseAddress());
                                 SharedPreferenUtils.saveString(LockScreenService.this,
                                         Constants.TAG_LAST_VERSE_CONTENT,
-                                            dbManager.queryTodayVerseContent());
+                                        dbManager.queryTodayVerseContent());
                             }
                         }
                     });
@@ -140,9 +157,11 @@ public class LockScreenService extends Service {
 
 
     public void onStart(Intent intent,int startId){
-        Log.i(TAG,"On Start");
+        Log.i(TAG, "On Start");
         super.onStart(intent, startId);
-        new Thread(new GetVerseThread()).start();
+        if (!isUpdated() && isPushVerseOpen()) {
+            new Thread(new GetVerseThread()).start();
+        }
         notifySpinnerBar();
     }
 

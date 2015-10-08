@@ -1,4 +1,4 @@
-package com.canaan.lockbible.Activity;
+package com.canaan.lockbible.ui.Activity;
 
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
@@ -7,8 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
-import com.canaan.lockbible.Fragment.BaseFragment;
-import com.canaan.lockbible.Fragment.NavigationDrawerFragment;
+import com.canaan.lockbible.ui.Fragment.BaseFragment;
+import com.canaan.lockbible.ui.Fragment.NavigationDrawerFragment;
 import com.canaan.lockbible.R;
 import com.canaan.lockbible.Service.LockScreenService;
 import com.umeng.update.UmengUpdateAgent;

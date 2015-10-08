@@ -54,6 +54,48 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/fragment_prefer_pin_show_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            style="@style/Preference_Text_Content"
+            android:text="@string/preference_open_pin"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/fragment_prefer_pin_show_switch"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:checked="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment_prefer_pin_setting_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/theme_text_secondary"
+            android:layout_marginLeft="16dp"
+            android:text="@string/preference_pin_setting"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

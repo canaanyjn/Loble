@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Loble</string>
-    <string name="app_version">1.1</string>
+    <string name="app_version">1.2</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -9,11 +9,23 @@
     <string name="drawer_item_main">经文列表</string>
     <string name="drawer_item_preference">设置</string>
     <string name="drawer_item_about">关于我们</string>
+    <string name="network_connection_is_wrong">网络连接错误</string>
+
+    <string name="list_is_empty">暂时没有内容</string>
+    <string name="list_is_end">到底啦</string>
+
+    <string name="pin_is_wrong">密码错误</string>
 
     <string name="preference_title">个性化设置</string>
     <string name="preference_open_lockscreen">开启锁屏</string>
     <string name="preference_open_netpush">开启经文推送</string>
     <string name="preference_open_toolbar">锁屏界面关闭系统状态栏</string>
+    <string name="preference_open_pin">开启锁屏密码</string>
+    <string name="preference_pin_setting">      设置锁屏密码</string>
+    <string name="set_pin_first">请先设置锁屏密码</string>
+    <string name="slide_to_unlock">滑动解锁</string>
+    <string name="set_pin">请设置密码</string>
+    <string name="confirm_pin">请确认密码</string>
     <string name="preference_update_time">每日经文更新时间</string>
     <string name="preference_other_setting_title">其他</string>
     <string name="feedback">意见反馈</string>

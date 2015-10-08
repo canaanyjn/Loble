@@ -1,4 +1,4 @@
-package com.canaan.lockbible.Fragment;
+package com.canaan.lockbible.ui.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,8 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
-import com.canaan.lockbible.Adapter.VerseListAdapter;
+import com.canaan.lockbible.ui.Adapter.LoadingFooter;
+import com.canaan.lockbible.ui.Adapter.VerseListAdapter;
 import com.canaan.lockbible.Constants.Constants;
 import com.canaan.lockbible.Model.Verse;
 import com.canaan.lockbible.R;
@@ -41,11 +42,15 @@ public class VerseListFragment extends BaseFragment {
     @InjectView(R.id.fab) FloatingActionButton mFAB;
     @InjectView(R.id.fragment_list_SR) SwipeRefreshLayout swipeRefreshLayout;
     private MaterialDialog mDialog;
+    private int current_page = 0;
+    private boolean isLoading = false;
 
     private VerseListAdapter adapter;
+    private LinearLayoutManager listManager;
     private List<Verse> mVerses = new ArrayList<>();
 
     private static final String TAG = VerseListFragment.class.getSimpleName();
+    private static final int ITEM_COUNT_PER_PAGE = 10;
 
     @Nullable
     @Override
@@ -79,56 +84,64 @@ public class VerseListFragment extends BaseFragment {
 //    }
 
     private void init(){
-        mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        listManager = new LinearLayoutManager(getActivity());
+        mRecycleView.setLayoutManager(listManager);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setHasFixedSize(true);
-        setDatas();
+        getNewDatas();
         adapter = new VerseListAdapter(getActivity(), mVerses);
         mRecycleView.setAdapter(adapter);
 
         getActivity().setTitle("经文列表");
 
         swipeRefreshLayout.setColorSchemeResources(R.color.theme_primary_light
-                        ,R.color.theme_accent_color
-                        ,R.color.theme_primary_dark);
+                , R.color.theme_accent_color
+                , R.color.theme_primary_dark);
     }
 
-    private void setDatas() {
-        mVerses = mDbManager.queryVerses();
-        Log.e(TAG,"mVerse size--->"+mVerses.size());
-        if (mVerses.size()==0) {
-            AVQuery<AVObject> query = new AVQuery<AVObject>("VerseList");
-            query.whereEqualTo("TAG", "1");
-            query.orderByAscending("count");
-            query.limit(100);
-            query.findInBackground(new FindCallback<AVObject>() {
+    private void getNewDatas() {
+        //mVerses = mDbManager.queryVerses();
+        //Log.e(TAG,"mVerse size--->"+mVerses.size());
+        //if (mVerses.size()==0) {
+        isLoading = true;
+        AVQuery<AVObject> query = new AVQuery<AVObject>("VerseList");
+        query.whereEqualTo("TAG", "1")
+            .orderByDescending("count")
+            .setSkip(current_page * ITEM_COUNT_PER_PAGE)
+            .limit(ITEM_COUNT_PER_PAGE)
+            .findInBackground(new FindCallback<AVObject>() {
                 public void done(List<AVObject> verses, AVException e) {
-                    if (verses == null)
-                        return;
-                    List<Verse> newVerses = new ArrayList<Verse>();
-                    for (int i = 0; i < verses.size(); i++) {
-                        Verse verse = new Verse();
-                        verse.setDate(verses.get(i).getString("date"));
-                        verse.setVerseAddress(verses.get(i).getString("verseAddress"));
-                        verse.setVerseContent(verses.get(i).getString("verseContent"));
-                        Log.e(TAG, "i-->" + i + ",verseA-->" + verses.get(i).getString("verseAddress"));
-                        newVerses.add(verse);
-                        mDbManager.addVerse(verse);
+                    if (e == null) {
+                        if (verses == null)
+                            return;
+                        List<Verse> newVerses = new ArrayList<Verse>();
+                        for (int i = 0; i < verses.size(); i++) {
+                            //newVerses.addAll((ArrayList) verses);
+                            Verse verse = new Verse();
+                            verse.setDate(verses.get(i).getString("date"));
+                            verse.setVerseAddress(verses.get(i).getString("verseAddress"));
+                            verse.setVerseContent(verses.get(i).getString("verseContent"));
+                            Log.e(TAG, "i-->" + i + ",verseA-->" + verses.get(i).getString("verseAddress"));
+                            newVerses.add(verse);
+                            mDbManager.addVerse(verse);
+                        }
+                        //mVerses = newVerses;
+                        //adapter.setVerses(mVerses);
+                        //mRecycleView.setAdapter(adapter);
+                        adapter.onLoadNewData(newVerses);
+                        Log.e(TAG, "verses size--->" + verses.size());
+                        swipeRefreshLayout.setRefreshing(false);
+                        current_page ++;
+                        isLoading = false;
+                    } else {
+                        if (isAdded()) {
+                            Log.d(TAG,getResources().getString(R.string.close_lock_screen));
+                        }
+                        isLoading = false;
                     }
-                    mVerses = newVerses;
-                    adapter.setVerses(mVerses);
-                    mRecycleView.setAdapter(adapter);
-                    Log.e(TAG, "verses size--->" + verses.size());
-                    swipeRefreshLayout.setRefreshing(false);
-                    adapter.notifyDataSetChanged();
-
-//                    SharedPreferenUtils.saveString(getActivity(), Constants.TAG_LAST_VERSE_ADDRESS,
-//                            addAddressEdittext.getText().toString());
-//                    SharedPreferenUtils.saveString(getActivity(), Constants.TAG_LAST_VERSE_CONTENT,
-//                            addContentEdittext.getText().toString());
                 }
             });
-        }
+        //}
 
     }
 
@@ -208,6 +221,14 @@ public class VerseListFragment extends BaseFragment {
                 }else {
                     swipeRefreshLayout.setEnabled(true);
                 }
+
+                int lastVisibleItemPosition = listManager.findLastVisibleItemPosition();
+                int itemCount = listManager.getItemCount();
+
+                if (!isLoading && adapter.getFooterState() != LoadingFooter.STATE_END
+                        && lastVisibleItemPosition > itemCount -3 && dy > 0) {
+                    getNewDatas();
+                }
             }
         });
     }
@@ -216,7 +237,7 @@ public class VerseListFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode==1){
-            setDatas();
+            getNewDatas();
             adapter.notifyDataSetChanged();
         }
     }
@@ -224,7 +245,7 @@ public class VerseListFragment extends BaseFragment {
     private void loadPage(){
         mDbManager.clearTable(mVerses);
         //mVerses.clear();
-        setDatas();
+        getNewDatas();
     }
 
 }
